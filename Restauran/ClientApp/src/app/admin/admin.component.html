@@ -1,0 +1,81 @@
+<h1 class="text-center">Add Food</h1>
+<form>
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Food</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col"><button class="btn btn-success" data-toggle="modal" data-target="#exampleModal" (click)="foodGroupReset()">Add item</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let food of foods">
+            <th scope="row">{{food.food}}</th>
+            <td>{{food.price}}</td>
+            <td>{{food.quantity}}</td>
+            <td>
+                <button class="btn btn-info mr-1" data-toggle="modal" data-target="#exampleModal" (click)="edit(food.id)">Edit</button>
+                <button class="btn btn-danger" (click)="delete(food.id)">delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </form>
+
+
+
+
+
+  
+<!-- Modal -->
+<form action="" novalidate [formGroup] = "formGroud">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Food</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+  
+          <div class="form-group">
+            <label>Food Name</label>
+            <input type="text" class="form-control" formControlName="food" required>
+            <span class="help-block" *ngIf="(formGroud.get('food').touched || formGroud.get('food').dirty) && formGroud.get('food').errors">
+              <span *ngIf="formGroud.get('food').errors.required">
+                El campo requerido
+              </span>
+            </span>
+          </div>
+          <div class="row">
+            <div class="form-group col">
+              <label>Price</label>
+              <input type="number" class="form-control" formControlName="price" required>
+              <span class="help-block" *ngIf="(formGroud.get('price').touched || formGroud.get('price').dirty) && formGroud.get('price').errors">
+                <span *ngIf="formGroud.get('price').errors.required">
+                  El campo requerido
+                </span>
+              </span>
+            </div>
+            <div class="form-group col">
+              <label>Quantity</label>
+              <input type="number" class="form-control" formControlName="quantity" required min="1">
+              <span class="help-block" *ngIf="(formGroud.get('quantity').touched || formGroud.get('quantity').dirty) && formGroud.get('quantity').errors">
+                <span *ngIf="formGroud.get('quantity').errors.required">
+                  El campo requerido
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="add()" [disabled]="!formGroud.valid">Submit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

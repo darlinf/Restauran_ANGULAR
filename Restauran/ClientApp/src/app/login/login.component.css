@@ -1,0 +1,31 @@
+
+.textAnimar{
+    color: black;
+    opacity: 0;
+    transition: all 1s ease;
+    transform: translateY(50px);
+    display: inline-block;
+}
+.textAnimar .fl{
+    opacity: 1;
+    transform: translateY(0px);
+}
+.formularioContainer{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.formulario{
+    padding: 13px;
+    border-radius: 5px;
+    width: 375px;
+    box-shadow:  1px 1px 10px 1px #888888;
+}
+.formularioButton{
+    margin-top: 10px;
+    width: 100%;
+}
+.textHomeContainer{
+    margin-bottom: 20px;
+}

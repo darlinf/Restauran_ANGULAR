@@ -1,0 +1,119 @@
+<h1 style="text-align: center">Restaurant App Order</h1>
+<form class="container" [formGroup]="formGroup">
+  <div class="row">
+    <div class="form-group col">
+      <label for="exampleInputEmail1">Order No.</label>
+      <input type="number" class="form-control"  
+       [value]="noOrder" id="exampleInputEmail1" disabled aria-describedby="emailHelp">
+    </div>
+    <div class="form-group col">
+      <label for="exampleInputPassword1">Payment Method</label>
+      <select class="form-control" formControlName="pMethod">
+        <option value="">-Select-</option>
+        <option value="Cash">Cash</option>
+        <option value="Card">Card</option>
+      </select> 
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col">
+      <label for="exampleInputEmail1">Customer</label>
+      <select class="form-control" formControlName="customerId">
+        <option value="">-Select-</option>
+        <option [value]="custome.id" *ngFor="let custome of customer">{{custome.name}}</option>
+      </select> 
+    </div>
+    <div class="form-group col">
+      <label for="exampleInputPassword1">Grand Total</label>
+      <input type="text" class="form-control"  disabled [value] = "grandTotal">
+    </div>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Food</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Total</th>
+        <th scope="col">
+          <button class="btn btn-success" data-toggle="modal"
+           data-target="#exampleModal" (click)="restart()">Add item</button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let food of foodArray; let i = index">
+        <th scope="row">{{food.food}}</th>
+        <td>{{food.price}}</td>
+        <td>{{food.quantity}}</td>
+        <td>{{food.total}}</td>
+        <td>
+          <button class="btn btn-info mr-1" (click)="editFoodItem(i)" 
+           data-toggle="modal" data-target="#exampleModal">Edit</button>
+          <button class="btn btn-danger"(click)="deleteFoodItem(i)">delete</button>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary mr-1" (click)="createOrder()">Submit</button>
+    <button type="button" class="btn btn-secondary ">View Orders</button>
+  </div>
+</form>
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<form>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Order Food Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label for="exampleInputPassword1">Food Item</label>
+          <select class="form-control" (change)="priceSelect($event.target.value)">
+            <option value="">Selecione una opcion</option>
+            <option *ngFor="let food of foodAndId" value="{{food.id}}" >{{food.food}}</option>
+          </select> 
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label for="exampleInputPassword1" >Price</label>
+            <input type="text" class="form-control" [value]="foodPrice != undefine? foodPrice : ''" placeholder="0" disabled>
+          </div>
+          <div class="form-group col">
+            <label for="exampleInputPassword1" placeholder="0">Quantity</label>
+            <input type="number" class="form-control" [disabled]="foodPrice == undefine" [(ngModel)]="quantity"
+             [ngModelOptions]="{standalone: true}" (keyup)="totalCarcular()" placeholder="0" >
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Total</label>
+          <input type="text" class="form-control" [value]="total != undefine ? total :''" placeholder="0" disabled>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary"
+         [disabled]="(quantity == 0 || quantity == undefine)"
+          data-dismiss="modal" (click)="addItem()">Submit</button>
+
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
